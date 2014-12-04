@@ -1,30 +1,22 @@
 package org.davy.soigntou;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
-public class MainActivity extends Activity implements OnClickListener {
-
-	private Button but1;
+public class AllPharmaciesActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		but1 = (Button)this.findViewById(R.id.button1);
-		but1.setOnClickListener(this);
+		setContentView(R.layout.activity_all_pharmacies);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.all_pharmacies, menu);
 		return true;
 	}
 
@@ -38,11 +30,5 @@ public class MainActivity extends Activity implements OnClickListener {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onClick(View arg0) {
-		Intent go = new Intent(this,AllPharmaciesActivity.class);
-		this.startActivityForResult(go, 10);
 	}
 }
