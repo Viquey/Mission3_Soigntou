@@ -1,0 +1,39 @@
+{
+    "0": {
+        "fields": {
+            "commune": "MORET SUR LOING",
+            "voie": "GRANDE",
+            "nofinesset": 770001659,
+            "rs": "PHARMACIE DU LOING",
+            "rslongue": "E.U.R.L. PHARMACIE D'OFFICINE DU LOING",
+            "compldistrib": "43-45 RUE GRANDE",
+            "typvoie": "RUE",
+            "telephone": 160705034,
+            "nofinessej": 770001618,
+            "telecopie": 160702669,
+            "numvoie": 43,
+            "lat": 48.3731,
+            "lng": 2.81787,
+            "cp": 77250
+        }
+    },
+    "1": {
+        "fields": {
+            "commune": "MARNE LA VALLEE CEDEX 2",
+            "voie": "AMPERE",
+            "lat": 48.842372,
+            "nofinesset": 770003358,
+            "lieuditbp": "CHAMPS SUR MARNE",
+            "rslongue": "SNC PHARMACIE COPERNIC",
+            "typvoie": "AVENUE",
+            "rs": "SNC PHARMACIE COPERNIC",
+            "telephone": 164618826,
+            "telecopie": 164618386,
+            "numvoie": 17,
+            "nofinessej": 770003309,
+            "lng": 2.583985,
+            "cp": 77311
+        }
+    }
+}
+
