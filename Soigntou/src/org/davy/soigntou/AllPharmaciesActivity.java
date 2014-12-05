@@ -8,38 +8,36 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Vector;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-/*import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;*/
-
-
-import objects.Pharmacie;
 import android.app.ListActivity;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-
-import com.google.android.gms.maps.model.LatLng;
+/*import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;*/
+import objects.Pharmacie;
 
 public class AllPharmaciesActivity extends ListActivity implements OnItemClickListener {
 
 	private String JSON;
-			
 	private Vector<Pharmacie> pharmas;
 	private String commune;
 	private String voie;
@@ -48,20 +46,25 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 	private String rslongue;
 	private String compldistrib;
 	private String typvoie;
-	private String telephone;
-	private String nofinessej;
-	private String telecopie;
+	private int telephone;
+	private int nofinessej;
+	private int telecopie;
 	private int numvoie;
 	private double lat;
 	private double lng;
 	private int cp;
-	
+	private int rayon;
+	private Location maPosition;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		rayon = this.getIntent().getExtras().getInt("rayon");
+		maPosition = getMaPosition(this);
 		JSON = lireJSON();
 		getPharmacies();
-		
+
 		ListView lv = getListView();
 		lv.setOnItemClickListener(this);
 	}
@@ -87,9 +90,9 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Toast.makeText(getApplicationContext(),pharmas.get(arg2).getRslongue(), Toast.LENGTH_SHORT).show();		
+		Toast.makeText(getApplicationContext(),pharmas.get(arg2).toString(), Toast.LENGTH_LONG).show();		
 	}
-	
+
 	private void getPharmacies() {
 		/*RequestQueue queue = Volley.newRequestQueue(this);
 		StringRequest stringRequest =
@@ -98,12 +101,12 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 
 					@Override
 					public void onResponse(String response) {*/
-						pharmas = parse(JSON);
-						ArrayAdapter<Pharmacie> aa =
-								new ArrayAdapter<Pharmacie>(AllPharmaciesActivity.this,
-										R.layout.list_item, pharmas);
-						AllPharmaciesActivity.this.setListAdapter(aa);
-					/*}
+		pharmas = parse(JSON);
+		ArrayAdapter<Pharmacie> aa =
+				new ArrayAdapter<Pharmacie>(AllPharmaciesActivity.this,
+						R.layout.list_item, pharmas);
+		AllPharmaciesActivity.this.setListAdapter(aa);
+		/*}
 				},
 				new Response.ErrorListener() {
 					@Override
@@ -114,64 +117,136 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 				});
 		queue.add(stringRequest);*/
 	}
-	
+
 	private Vector<Pharmacie> parse(String json) {
-		Log.i("parse","launched");
 		Vector<Pharmacie> array = new Vector<Pharmacie>();
 		try{
-			Log.i("try","launched");
 			JSONObject reader = new JSONObject(json);
-			//JSONObject liste  = reader.getJSONObject("pharmacies");
 			Pharmacie pharma = null;
 			Log.i("reader lenght",""+reader.length());
 			for(int i=0;i<reader.length();i++){
-				Log.i("i","="+i);
 				JSONObject pharmacie  = reader.getJSONObject(Integer.toString(i));
 				JSONObject fields = pharmacie.getJSONObject("fields");
-				
-				commune = fields.getString("commune");
-				//voie = fields.getString("voie");
-				//nofinesset = fields.getInt("nofinesset");
-				//rs = fields.getString("rs");
-				rslongue = fields.getString("rslongue");
-				//compldistrib = fields.getString("compldistrib");
-				//typvoie = fields.getString("typvoie");
-				//telephone = fields.getString("telephone");
-				//nofinessej = fields.getString("nofinessej");
-				//telecopie = fields.getString("telecopie");
-				//numvoie = fields.getInt("numvoie");
-				//lat =  fields.getDouble("lat");
-				//lng =  fields.getDouble("lng");
-				//cp =  fields.getInt("cp");
-								
-				pharma = new Pharmacie();
-				
-				pharma.setCommune(commune);
-				//pharma.setVoie(voie);
-				//pharma.setNofinesset(nofinesset);
-				//pharma.setRs(rs);
-				pharma.setRslongue(rslongue);
-				//pharma.setCompldistrib(compldistrib);
-				//pharma.setTypvoie(typvoie);
-				//pharma.setTelephone(telephone);
-				//pharma.setNofinessej(nofinessej);
-				//pharma.setTelecopie(telecopie);
-				//pharma.setNumvoie(numvoie);
-				//pharma.setLat(lat);
-				//pharma.setLng(lng);
-				//pharma.setCp(cp);
-								
-				array.add(pharma);
-				Log.i("info", "element ajouté");
+				if(fields.has("lat")) {
+					lat = fields.getDouble("lat");
+				}
+				else{
+					lat = 0 ;
+				}
+				if(fields.has("lng")) {
+					lng = fields.getDouble("lng");
+				}
+				else{
+					lng = 0 ;
+				}
+				Location locPharm = new Location("Pharmacie");
+				locPharm.setLatitude(lat);
+				locPharm.setLongitude(lng);
+				double distance = locPharm.distanceTo(maPosition)/1000;
+				if(distance<rayon){
+					Log.i("distance", distance+"");
+					if(fields.has("commune")) {
+						commune = fields.getString("commune");
+					}
+					else{
+						commune ="Non renseigné";
+					}
+					if(fields.has("voie")) {
+						voie = fields.getString("voie");
+					}
+					else{
+						voie ="Non renseigné";
+					}
+					if(fields.has("nofinesset")) {
+						nofinesset = fields.getInt("nofinesset");
+					}
+					else{
+						nofinesset = 0 ;
+					}
+					if(fields.has("rs")) {
+						rs = fields.getString("rs");
+					}
+					else{
+						rs ="Non renseigné";
+					}
+					if(fields.has("rslongue")) {
+						rslongue = fields.getString("rslongue");
+					}
+					else{
+						rslongue =rs;
+					}
+					if(fields.has("compldistrib")) {
+						compldistrib = fields.getString("compldistrib");
+					}
+					else{
+						compldistrib ="Non renseigné";
+					}
+					if(fields.has("typvoie")) {
+						typvoie = fields.getString("typvoie");
+					}
+					else{
+						typvoie ="Non renseigné";
+					}
+					if(fields.has("telephone")) {
+						telephone = fields.getInt("telephone");
+					}
+					else{
+						telephone = 0 ;
+					}
+					if(fields.has("nofinessej")) {
+						nofinessej = fields.getInt("nofinessej");
+					}
+					else{
+						nofinessej = 0 ;
+					}
+					if(fields.has("telecopie")) {
+						telecopie = fields.getInt("telecopie");
+					}
+					else{
+						telecopie = 0 ;
+					}
+					if(fields.has("numvoie")) {
+						numvoie = fields.getInt("numvoie");
+					}
+					else{
+						numvoie = 0 ;
+					}
+					if(fields.has("cp")) {
+						cp = fields.getInt("cp");
+					}
+					else{
+						cp = 0 ;
+					}
+
+					pharma = new Pharmacie();
+
+					pharma.setCommune(commune);
+					pharma.setVoie(voie);
+					pharma.setNofinesset(nofinesset);
+					pharma.setRs(rs);
+					pharma.setRslongue(rslongue);
+					pharma.setCompldistrib(compldistrib);
+					pharma.setTypvoie(typvoie);
+					pharma.setTelephone(telephone);
+					pharma.setNofinessej(nofinessej);
+					pharma.setTelecopie(telecopie);
+					pharma.setNumvoie(numvoie);
+					pharma.setLat(lat);
+					pharma.setLng(lng);
+					pharma.setCp(cp);
+
+					array.add(pharma);
+					Log.i("info", "element ajouté:"+rslongue);
+				}
 			}
 		}
 		catch (Exception e) {
-	           // TODO Auto-generated catch block
-	           e.printStackTrace();
-	    }
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return array;
 	}
-	
+
 	public String lireJSON() {
 		InputStream is = getResources().openRawResource(R.raw.data);
 		Writer writer = new StringWriter();
@@ -198,4 +273,18 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 
 		return writer.toString();
 	}
+
+	public final static Location getMaPosition(Context _context) {
+		Location location = null;
+		try {
+			LocationManager locationManager = (LocationManager)
+					_context.getSystemService(Context.LOCATION_SERVICE);
+			List<String> providers = locationManager.getProviders(true);
+			for (int i = providers.size() - 1; i >= 0; i--) {
+				location = locationManager.getLastKnownLocation(providers.get(i));
+			}
+		} catch (Exception e) {}
+		return location;
+	}
+	
 }
