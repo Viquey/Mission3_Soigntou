@@ -24,8 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends Activity {
-	/*static final LatLng MELUN = new LatLng(48.627049,2.591791);
-	  static final LatLng LYCEE = new LatLng(48.624298, 2.580957);*/
+	
 	private GoogleMap map;
 	private int rayon;
 	private List<Pharmacie> listePharmas;
@@ -40,17 +39,30 @@ public class MapActivity extends Activity {
 		listePharmas = (List<Pharmacie>) this.getIntent().getExtras().getSerializable("listePharmas");		
 		Location mine = getMaPosition(this);
 		LatLng minee = new LatLng(mine.getLatitude(),mine.getLongitude());
-		Marker melun = map.addMarker(new MarkerOptions().position(minee).title("Ma position"));
+		Marker markerMe = map.addMarker(new MarkerOptions().position(minee).title("Ma position"));
+		
 		for(Pharmacie pharmacie : listePharmas){
+			double distance = pharmacie.getDistanceFromMyPosition();
+			String extDistance = "m";
+			String pharmaDistance = "";
+			if (distance > 1000) {
+				distance = distance / 1000;
+				distance = (double) Math.round(distance * 10)/10;
+				extDistance = "km";
+				pharmaDistance = distance+" "+extDistance;
+			}
+			else {
+				int distance2 =  (int) Math.round(distance);
+				pharmaDistance = distance2+" "+extDistance;
+			}
+			
 			LatLng pharmLatLng = new LatLng(pharmacie.getLat(),pharmacie.getLng());
-			Marker pharmMark = map.addMarker(new MarkerOptions().position(pharmLatLng).title(pharmacie.getRs()));
+			Marker pharmMark = map.addMarker(new MarkerOptions()
+				.position(pharmLatLng)
+				.title(pharmacie.getRslongue()+" "+pharmaDistance)
+				/*.icon(BitmapDescriptorFactory
+			            .fromResource(R.drawable.ic_plusone_small_off_client))*/);
 		}
-		/*Marker lycee = map.addMarker(new MarkerOptions()
-	        .position(LYCEE)
-	        .title("Chez moi")
-	        .snippet("Lugny 77 rpz AIIIIIIGHT")
-	        .icon(BitmapDescriptorFactory
-	            .fromResource(R.drawable.vinci)));*/
 
 		// Ajuste la camera sur Melun avec un zoom de 15
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(minee, 15));
@@ -75,6 +87,12 @@ public class MapActivity extends Activity {
 			Intent intent = new Intent(this,AllPharmaciesActivity.class);
 			intent.putExtra("rayon", rayon);
 			this.startActivityForResult(intent, 10 );
+			finish();
+		}
+		else if (id == R.id.goHome) {
+			Intent intent = new Intent(this, MainActivity.class);
+			this.startActivityForResult(intent, 10);
+			finish();
 		}
 		return super.onOptionsItemSelected(item);
 	}

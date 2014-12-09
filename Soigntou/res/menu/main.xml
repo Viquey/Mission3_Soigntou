@@ -3,6 +3,12 @@
     tools:context="org.davy.soigntou.MainActivity" >
 
     <item
+		android:id="@+id/goHome"
+		android:icon="@android:drawable/ic_dialog_dialer"
+		android:showAsAction = "ifRoom"
+		android:title="Accueil"/>
+    
+    <item
 		android:id="@+id/goMap"
 		android:icon="@android:drawable/ic_dialog_map"
 		android:showAsAction = "ifRoom"

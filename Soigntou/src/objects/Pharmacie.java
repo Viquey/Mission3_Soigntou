@@ -2,6 +2,8 @@ package objects;
 
 import java.io.Serializable;
 
+import android.location.Location;
+
 public class Pharmacie implements Serializable {
 	
 	private String commune;
@@ -18,6 +20,8 @@ public class Pharmacie implements Serializable {
 	private Double lat;
 	private Double lng;
 	private int cp;
+	private String adresse;
+	private double distanceFromMyPosition;
 	
 	public Pharmacie() {
 		super();
@@ -160,6 +164,46 @@ public class Pharmacie implements Serializable {
 	public String toString() {
 		return rslongue;
 	}
+	
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void makeAdresse(){
+		String adresseMade = "";
+		
+		if (this.numvoie != 0 ) {
+			adresseMade = this.numvoie+"";
+		}
+		if (!this.typvoie.equals("Non renseigné")) {
+			adresseMade = adresseMade +" "+ this.typvoie;
+		}
+		if (!this.voie.equals("Non renseigné")) {
+			adresseMade = adresseMade +" "+ this.voie;
+		}
+		
+		if (adresseMade.equals("")) {
+			adresseMade = "Non renseigné";
+		}
+		
+		this.adresse = adresseMade;
+		
+	}
+	
+	public double getDistanceFromMyPosition() {
+		return distanceFromMyPosition;
+	}
+
+	public void makeDistance(Location maPosition) {
+		
+		Location locPharm = new Location("pharmacie");
+		locPharm.setLatitude(this.lat);
+		locPharm.setLongitude(this.lng);
+		double distanceCalculated = locPharm.distanceTo(maPosition);
+		
+		this.distanceFromMyPosition = distanceCalculated;
+	}
+	
 	
 	
 }

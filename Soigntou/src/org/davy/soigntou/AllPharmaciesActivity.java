@@ -11,10 +11,20 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Vector;
 
+/*import com.android.volley.Request;
+ import com.android.volley.RequestQueue;
+ import com.android.volley.Response;
+ import com.android.volley.VolleyError;
+ import com.android.volley.toolbox.StringRequest;
+ import com.android.volley.toolbox.Volley;*/
+import objects.Pharmacie;
+
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -28,13 +38,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-/*import com.android.volley.Request;
- import com.android.volley.RequestQueue;
- import com.android.volley.Response;
- import com.android.volley.VolleyError;
- import com.android.volley.toolbox.StringRequest;
- import com.android.volley.toolbox.Volley;*/
-import objects.Pharmacie;
 
 public class AllPharmaciesActivity extends ListActivity implements
 		OnItemClickListener {
@@ -88,14 +91,56 @@ public class AllPharmaciesActivity extends ListActivity implements
 			intent.putExtra("rayon", rayon);
 			intent.putExtra("listePharmas", listePharmas);
 			this.startActivityForResult(intent, 10);
+			finish();
+		}
+		else if (id == R.id.goHome) {
+			Intent intent = new Intent(this, MainActivity.class);
+			this.startActivityForResult(intent, 10);
+			finish();
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Toast.makeText(getApplicationContext(), listePharmas.get(arg2).toString(),
-				Toast.LENGTH_LONG).show();
+		
+		//variable pour contruire le message du AlertDialogue
+		Pharmacie currentPharma = listePharmas.get(arg2);
+		String pharmaInfo = currentPharma.getAdresse();
+		String pharmaVille = currentPharma.getCommune() +" "+ currentPharma.getCp();
+		String pharmaPhone = "0"+currentPharma.getTelephone();
+		String pharmaFax = "0"+currentPharma.getTelecopie();
+		
+		//Traitement pour récuperer la distance en m ou en km et arrondie
+		double distance = currentPharma.getDistanceFromMyPosition();
+		String extDistance = "m";
+		String pharmaDistance = "";
+		if (distance > 1000) {
+			distance = distance / 1000;
+			distance = (double) Math.round(distance * 10)/10;
+			extDistance = "km";
+			pharmaDistance = distance+" "+extDistance;
+		}
+		else {
+			int distance2 =  (int) Math.round(distance);
+			pharmaDistance = distance2+" "+extDistance;
+		}
+		
+		
+		
+		new AlertDialog.Builder(this)
+	    .setTitle(currentPharma.getRslongue())
+	    .setMessage("-Adresse : "+pharmaInfo+"\n"
+	    		+"-Ville : "+pharmaVille+"\n"
+	    		+"-Téléphone : "+pharmaPhone+"\n"
+	    		+"-Fax : "+pharmaFax+"\n"
+	    		+"-Distance : "+pharmaDistance)
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // continue with delete
+	        }
+	     })
+	     .show();
 	}
 
 	private void getPharmacies() {
@@ -223,6 +268,9 @@ public class AllPharmaciesActivity extends ListActivity implements
 					pharma.setLng(lng);
 					pharma.setCp(cp);
 
+					pharma.makeDistance(maPosition);
+					pharma.makeAdresse();
+					
 					array.add(pharma);
 					Log.i("info", "element ajouté:" + rslongue);
 				}
