@@ -29,17 +29,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 /*import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;*/
+ import com.android.volley.RequestQueue;
+ import com.android.volley.Response;
+ import com.android.volley.VolleyError;
+ import com.android.volley.toolbox.StringRequest;
+ import com.android.volley.toolbox.Volley;*/
 import objects.Pharmacie;
 
-public class AllPharmaciesActivity extends ListActivity implements OnItemClickListener {
+public class AllPharmaciesActivity extends ListActivity implements
+		OnItemClickListener {
 
 	private String JSON;
-	private Vector<Pharmacie> pharmas;
+	private Vector<Pharmacie> listePharmas;
 	private String commune;
 	private String voie;
 	private int nofinesset;
@@ -56,7 +57,6 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 	private int cp;
 	private int rayon;
 	private Location maPosition;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,140 +84,126 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.goMap) {
-			Intent intent = new Intent(this,MapActivity.class);
-			this.startActivityForResult(intent, 10 );
+			Intent intent = new Intent(this, MapActivity.class);
+			intent.putExtra("rayon", rayon);
+			intent.putExtra("listePharmas", listePharmas);
+			this.startActivityForResult(intent, 10);
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Toast.makeText(getApplicationContext(),pharmas.get(arg2).toString(), Toast.LENGTH_LONG).show();		
+		Toast.makeText(getApplicationContext(), listePharmas.get(arg2).toString(),
+				Toast.LENGTH_LONG).show();
 	}
 
 	private void getPharmacies() {
-		/*RequestQueue queue = Volley.newRequestQueue(this);
-		StringRequest stringRequest =
-				new StringRequest(Request.Method.GET, JSON_XMLRESSOURCE,
-						new Response.Listener<String>() {
-
-					@Override
-					public void onResponse(String response) {*/
-		pharmas = parse(JSON);
-		ArrayAdapter<Pharmacie> aa =
-				new ArrayAdapter<Pharmacie>(AllPharmaciesActivity.this,
-						R.layout.list_item, pharmas);
+		/*
+		 * RequestQueue queue = Volley.newRequestQueue(this); StringRequest
+		 * stringRequest = new StringRequest(Request.Method.GET,
+		 * JSON_XMLRESSOURCE, new Response.Listener<String>() {
+		 * 
+		 * @Override public void onResponse(String response) {
+		 */
+		listePharmas = parse(JSON);
+		ArrayAdapter<Pharmacie> aa = new ArrayAdapter<Pharmacie>(
+				AllPharmaciesActivity.this, R.layout.list_item, listePharmas);
 		AllPharmaciesActivity.this.setListAdapter(aa);
-		/*}
-				},
-				new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						Toast.makeText(getApplicationContext(),"That didn't work!",
-								Toast.LENGTH_SHORT).show();
-					}
-				});
-		queue.add(stringRequest);*/
+		/*
+		 * } }, new Response.ErrorListener() {
+		 * 
+		 * @Override public void onErrorResponse(VolleyError error) {
+		 * Toast.makeText(getApplicationContext(),"That didn't work!",
+		 * Toast.LENGTH_SHORT).show(); } }); queue.add(stringRequest);
+		 */
 	}
 
 	private Vector<Pharmacie> parse(String json) {
 		Vector<Pharmacie> array = new Vector<Pharmacie>();
-		try{
+		try {
 			JSONObject reader = new JSONObject(json);
 			Pharmacie pharma = null;
-			Log.i("reader lenght",""+reader.length());
-			for(int i=0;i<reader.length();i++){
-				JSONObject pharmacie  = reader.getJSONObject(Integer.toString(i));
+			Log.i("reader lenght", "" + reader.length());
+			for (int i = 0; i < reader.length(); i++) {
+				JSONObject pharmacie = reader
+						.getJSONObject(Integer.toString(i));
 				JSONObject fields = pharmacie.getJSONObject("fields");
-				if(fields.has("lat")) {
+				if (fields.has("lat")) {
 					lat = fields.getDouble("lat");
+				} else {
+					lat = 0;
 				}
-				else{
-					lat = 0 ;
-				}
-				if(fields.has("lng")) {
+				if (fields.has("lng")) {
 					lng = fields.getDouble("lng");
-				}
-				else{
-					lng = 0 ;
+				} else {
+					lng = 0;
 				}
 				Location locPharm = new Location("Pharmacie");
 				locPharm.setLatitude(lat);
 				locPharm.setLongitude(lng);
-				double distance = locPharm.distanceTo(maPosition)/1000;
-				if(distance<rayon){
-					Log.i("distance", distance+"");
-					if(fields.has("commune")) {
+				double distance = locPharm.distanceTo(maPosition) / 1000;
+				if (distance < rayon) {
+					Log.i("distance", distance + "");
+					if (fields.has("commune")) {
 						commune = fields.getString("commune");
+					} else {
+						commune = "Non renseigné";
 					}
-					else{
-						commune ="Non renseigné";
-					}
-					if(fields.has("voie")) {
+					if (fields.has("voie")) {
 						voie = fields.getString("voie");
+					} else {
+						voie = "Non renseigné";
 					}
-					else{
-						voie ="Non renseigné";
-					}
-					if(fields.has("nofinesset")) {
+					if (fields.has("nofinesset")) {
 						nofinesset = fields.getInt("nofinesset");
+					} else {
+						nofinesset = 0;
 					}
-					else{
-						nofinesset = 0 ;
-					}
-					if(fields.has("rs")) {
+					if (fields.has("rs")) {
 						rs = fields.getString("rs");
+					} else {
+						rs = "Non renseigné";
 					}
-					else{
-						rs ="Non renseigné";
-					}
-					if(fields.has("rslongue")) {
+					if (fields.has("rslongue")) {
 						rslongue = fields.getString("rslongue");
+					} else {
+						rslongue = rs;
 					}
-					else{
-						rslongue =rs;
-					}
-					if(fields.has("compldistrib")) {
+					if (fields.has("compldistrib")) {
 						compldistrib = fields.getString("compldistrib");
+					} else {
+						compldistrib = "Non renseigné";
 					}
-					else{
-						compldistrib ="Non renseigné";
-					}
-					if(fields.has("typvoie")) {
+					if (fields.has("typvoie")) {
 						typvoie = fields.getString("typvoie");
+					} else {
+						typvoie = "Non renseigné";
 					}
-					else{
-						typvoie ="Non renseigné";
-					}
-					if(fields.has("telephone")) {
+					if (fields.has("telephone")) {
 						telephone = fields.getInt("telephone");
+					} else {
+						telephone = 0;
 					}
-					else{
-						telephone = 0 ;
-					}
-					if(fields.has("nofinessej")) {
+					if (fields.has("nofinessej")) {
 						nofinessej = fields.getInt("nofinessej");
+					} else {
+						nofinessej = 0;
 					}
-					else{
-						nofinessej = 0 ;
-					}
-					if(fields.has("telecopie")) {
+					if (fields.has("telecopie")) {
 						telecopie = fields.getInt("telecopie");
+					} else {
+						telecopie = 0;
 					}
-					else{
-						telecopie = 0 ;
-					}
-					if(fields.has("numvoie")) {
+					if (fields.has("numvoie")) {
 						numvoie = fields.getInt("numvoie");
+					} else {
+						numvoie = 0;
 					}
-					else{
-						numvoie = 0 ;
-					}
-					if(fields.has("cp")) {
+					if (fields.has("cp")) {
 						cp = fields.getInt("cp");
-					}
-					else{
-						cp = 0 ;
+					} else {
+						cp = 0;
 					}
 
 					pharma = new Pharmacie();
@@ -238,11 +224,10 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 					pharma.setCp(cp);
 
 					array.add(pharma);
-					Log.i("info", "element ajouté:"+rslongue);
+					Log.i("info", "element ajouté:" + rslongue);
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -255,7 +240,8 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 		char[] buffer = new char[1024];
 
 		try {
-			Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			Reader reader = new BufferedReader(new InputStreamReader(is,
+					"UTF-8"));
 			int n;
 
 			while ((n = reader.read(buffer)) != -1) {
@@ -279,14 +265,16 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 	public final static Location getMaPosition(Context _context) {
 		Location location = null;
 		try {
-			LocationManager locationManager = (LocationManager)
-					_context.getSystemService(Context.LOCATION_SERVICE);
+			LocationManager locationManager = (LocationManager) _context
+					.getSystemService(Context.LOCATION_SERVICE);
 			List<String> providers = locationManager.getProviders(true);
 			for (int i = providers.size() - 1; i >= 0; i--) {
-				location = locationManager.getLastKnownLocation(providers.get(i));
+				location = locationManager.getLastKnownLocation(providers
+						.get(i));
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 		return location;
 	}
-	
+
 }

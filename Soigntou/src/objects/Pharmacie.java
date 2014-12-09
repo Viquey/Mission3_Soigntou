@@ -1,8 +1,8 @@
 package objects;
 
-import com.google.android.gms.maps.model.LatLng;
+import java.io.Serializable;
 
-public class Pharmacie {
+public class Pharmacie implements Serializable {
 	
 	private String commune;
 	private String voie;
