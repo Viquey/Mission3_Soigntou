@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -72,7 +73,7 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.all_pharmacies, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -82,8 +83,9 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		if (id == R.id.goMap) {
+			Intent intent = new Intent(this,MapActivity.class);
+			this.startActivityForResult(intent, 10 );
 		}
 		return super.onOptionsItemSelected(item);
 	}
