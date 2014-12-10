@@ -40,7 +40,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class AllPharmaciesActivity extends ListActivity implements
-		OnItemClickListener {
+OnItemClickListener {
 
 	private String JSON;
 	private ArrayList<Pharmacie> listePharmas;
@@ -103,14 +103,14 @@ public class AllPharmaciesActivity extends ListActivity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		
+
 		//variable pour contruire le message du AlertDialogue
 		Pharmacie currentPharma = listePharmas.get(arg2);
 		String pharmaInfo = currentPharma.getAdresse();
 		String pharmaVille = currentPharma.getCommune() +" "+ currentPharma.getCp();
 		String pharmaPhone = "0"+currentPharma.getTelephone();
 		String pharmaFax = "0"+currentPharma.getTelecopie();
-		
+
 		//Traitement pour récuperer la distance en m ou en km et arrondie
 		double distance = currentPharma.getDistanceFromMyPosition();
 		String extDistance = "m";
@@ -125,22 +125,22 @@ public class AllPharmaciesActivity extends ListActivity implements
 			int distance2 =  (int) Math.round(distance);
 			pharmaDistance = distance2+" "+extDistance;
 		}
-		
-		
-		
+
+
+
 		new AlertDialog.Builder(this)
-	    .setTitle(currentPharma.getRslongue())
-	    .setMessage("-Adresse : "+pharmaInfo+"\n"
-	    		+"-Ville : "+pharmaVille+"\n"
-	    		+"-Téléphone : "+pharmaPhone+"\n"
-	    		+"-Fax : "+pharmaFax+"\n"
-	    		+"-Distance : "+pharmaDistance)
-	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) { 
-	            // continue with delete
-	        }
-	     })
-	     .show();
+		.setTitle(currentPharma.getRslongue())
+		.setMessage("-Adresse : "+pharmaInfo+"\n"
+				+"-Ville : "+pharmaVille+"\n"
+				+"-Téléphone : "+pharmaPhone+"\n"
+				+"-Fax : "+pharmaFax+"\n"
+				+"-Distance : "+pharmaDistance)
+				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) { 
+						// continue with delete
+					}
+				})
+				.show();
 	}
 
 	private void getPharmacies() {
@@ -271,7 +271,7 @@ public class AllPharmaciesActivity extends ListActivity implements
 
 					pharma.makeDistance(maPosition);
 					pharma.makeAdresse();
-					
+
 					array.add(pharma);
 					Log.i("info", "element ajouté:" + rslongue);
 				}

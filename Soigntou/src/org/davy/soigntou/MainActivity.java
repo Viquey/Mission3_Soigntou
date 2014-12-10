@@ -36,14 +36,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		if (strDistance.trim().equals("")) {
 			new AlertDialog.Builder(this).setTitle("Attention !")
 				.setMessage("Vous n'avez pas mis de rayon de recherche !")
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {			
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						
-					}
-				
+						// TODO Auto-generated method stub				
+					}		
 				}).show();
 		} 
 		else {
