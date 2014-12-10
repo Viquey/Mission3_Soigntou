@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.davy.soigntou.MainActivity" >
+
+    <item
+		android:id="@+id/goHome"
+		android:icon="@android:drawable/ic_dialog_dialer"
+		android:showAsAction = "ifRoom"
+		android:title="Accueil"/>
+    
+    <item
+		android:id="@+id/goAllPharma"
+		android:icon="@android:drawable/ic_input_get"
+		android:showAsAction = "ifRoom"
+		android:title="Liste de pharmacies"/>
+
+</menu>

@@ -1,6 +1,7 @@
 package objects;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import android.location.Location;
 
@@ -13,7 +14,7 @@ public class Pharmacie implements Serializable {
 	private String rslongue;
 	private String compldistrib;
 	private String typvoie;
-	private int telephone;
+	private int telephone; 
 	private int nofinessej;
 	private int telecopie;
 	private int numvoie;
