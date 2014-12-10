@@ -5,34 +5,40 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener, OnSeekBarChangeListener{
 
 	private Button but1;
-	private EditText editKm;
+	private SeekBar editKm;
 	private String strDistance;
 	private int distance;
+	private TextView textProgress;
+	private TextView textAction;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		but1 = (Button)this.findViewById(R.id.button1);
-		editKm = (EditText)this.findViewById(R.id.editKm);
+		but1 = (Button)this.findViewById(R.id.but1);
+		editKm = (SeekBar)this.findViewById(R.id.seekKm);
+		editKm.setOnSeekBarChangeListener(this);
 		but1.setOnClickListener(this);
+		
+		textProgress = (TextView)findViewById(R.id.kmValue);
+		textAction = (TextView)findViewById(R.id.kmText);
+		
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		Intent go = new Intent(this,AllPharmaciesActivity.class);
-		strDistance = editKm.getText().toString();
+		strDistance = textProgress.getText().toString();
 		if (strDistance.trim().equals("")) {
 			new AlertDialog.Builder(this).setTitle("Attention !")
 				.setMessage("Vous n'avez pas mis de rayon de recherche !")
@@ -40,7 +46,6 @@ public class MainActivity extends Activity implements OnClickListener {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
 						
 					}
 				
@@ -51,5 +56,24 @@ public class MainActivity extends Activity implements OnClickListener {
 			go.putExtra("rayon",distance);
 			this.startActivityForResult(go, 10);
 		}
+	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromAction) {
+		
+		textProgress.setText((progress+1)+"");
+    	// change action text label to changing
+    	textAction.setText(" km");
+		
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar arg0) {
+
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
+
 	}
 }

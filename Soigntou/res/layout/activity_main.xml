@@ -8,34 +8,52 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.davy.soigntou.MainActivity" >
 
-    <EditText
-        android:id="@+id/editKm"
+
+    <TextView
+        android:id="@+id/kmText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignBaseline="@+id/kmValue"
+        android:layout_alignBottom="@+id/kmValue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="145dp"
-        android:ems="10"
-        android:inputType="number" >
+        android:text=" km"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <requestFocus />
-    </EditText>
-
+    <Button
+        android:id="@+id/but1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="186dp"
+        android:text="@string/but1" />
+    
+    <TextView
+        android:id="@+id/kmValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/but1"
+        android:layout_marginBottom="14dp"
+        android:layout_toLeftOf="@+id/kmText"
+        android:text="1"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <SeekBar
+        android:id="@+id/seekKm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/kmValue"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:max="149" />
+    
     <TextView
         android:id="@+id/kmView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editKm"
+        android:layout_above="@+id/seekKm"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/kmView" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/but1" />
 
 </RelativeLayout>
