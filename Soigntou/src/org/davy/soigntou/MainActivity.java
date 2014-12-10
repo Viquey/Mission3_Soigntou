@@ -42,13 +42,17 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 		if (strDistance.trim().equals("")) {
 			new AlertDialog.Builder(this).setTitle("Attention !")
 				.setMessage("Vous n'avez pas mis de rayon de recherche !")
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {			
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+<<<<<<< HEAD
 						
 					}
 				
+=======
+						// TODO Auto-generated method stub				
+					}		
+>>>>>>> 8a34f2d4ae2636320b702bd2e24723427b66a900
 				}).show();
 		} 
 		else {
