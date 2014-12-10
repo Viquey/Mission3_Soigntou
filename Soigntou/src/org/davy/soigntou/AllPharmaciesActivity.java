@@ -8,8 +8,9 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
 
 /*import com.android.volley.Request;
  import com.android.volley.RequestQueue;
@@ -37,13 +38,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class AllPharmaciesActivity extends ListActivity implements
 		OnItemClickListener {
 
 	private String JSON;
-	private Vector<Pharmacie> listePharmas;
+	private ArrayList<Pharmacie> listePharmas;
 	private String commune;
 	private String voie;
 	private int nofinesset;
@@ -152,6 +152,7 @@ public class AllPharmaciesActivity extends ListActivity implements
 		 * @Override public void onResponse(String response) {
 		 */
 		listePharmas = parse(JSON);
+		Collections.sort(listePharmas);
 		ArrayAdapter<Pharmacie> aa = new ArrayAdapter<Pharmacie>(
 				AllPharmaciesActivity.this, R.layout.list_item, listePharmas);
 		AllPharmaciesActivity.this.setListAdapter(aa);
@@ -164,8 +165,8 @@ public class AllPharmaciesActivity extends ListActivity implements
 		 */
 	}
 
-	private Vector<Pharmacie> parse(String json) {
-		Vector<Pharmacie> array = new Vector<Pharmacie>();
+	private ArrayList<Pharmacie> parse(String json) {
+		ArrayList<Pharmacie> array = new ArrayList<Pharmacie>();
 		try {
 			JSONObject reader = new JSONObject(json);
 			Pharmacie pharma = null;
