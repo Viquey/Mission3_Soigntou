@@ -56,4 +56,22 @@
         android:layout_marginBottom="16dp"
         android:text="@string/kmView" />
 
+    <Button
+        android:id="@+id/plusButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/seekKm"
+        android:layout_alignTop="@+id/kmText"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/moinsButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/seekKm"
+        android:layout_alignTop="@+id/kmValue"
+        android:text="-" />
+
 </RelativeLayout>

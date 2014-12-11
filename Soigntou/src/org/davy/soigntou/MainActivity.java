@@ -24,6 +24,7 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	private int distance;
 	private TextView textProgress;
 	private TextView textAction;
+	private Button boutonPlus, boutonMoins;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,24 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 		
 		but1 = (Button)this.findViewById(R.id.but1);
 		editKm = (SeekBar)this.findViewById(R.id.seekKm);
+		textProgress = (TextView)findViewById(R.id.kmValue);
+		textAction = (TextView)findViewById(R.id.kmText);
+		boutonPlus = (Button)findViewById(R.id.plusButton);
+		boutonMoins = (Button)findViewById(R.id.moinsButton);
+		
+		boutonPlus.setOnClickListener(new OnClickListener()   {
+            @Override
+            public void onClick(View v) {editKm.setProgress((int)editKm.getProgress() + 1);}}
+		);
+		boutonMoins.setOnClickListener(new OnClickListener()   {
+            @Override
+            public void onClick(View v) {editKm.setProgress((int)editKm.getProgress() - 1);}}
+		);
+		
 		editKm.setOnSeekBarChangeListener(this);
 		but1.setOnClickListener(this);
 		
-		textProgress = (TextView)findViewById(R.id.kmValue);
-		textAction = (TextView)findViewById(R.id.kmText);
+		
 		
 		LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -57,27 +71,16 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	public void onClick(View arg0) {
 		Intent go = new Intent(this,AllPharmaciesActivity.class);
 		strDistance = textProgress.getText().toString();
-		if (strDistance.trim().equals("")) {
-			new AlertDialog.Builder(this).setTitle("Champs non-rempli")
-				.setMessage("Vous n'avez pas mis de rayon de recherche !")
-				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {			
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub				
-					}		
-				}).show();
-		} 
-		else {
-			distance = Integer.parseInt(strDistance);
-			go.putExtra("rayon",distance);
-			this.startActivityForResult(go, 10);
-		}
+		distance = Integer.parseInt(strDistance);
+		go.putExtra("rayon",distance);
+		this.startActivityForResult(go, 10);
+		
 	}
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromAction) {
 		
-		textProgress.setText((progress+1)+"");
+		textProgress.setText(String.valueOf(progress+1));
     	// change action text label to changing
     	textAction.setText(" km");
 		
