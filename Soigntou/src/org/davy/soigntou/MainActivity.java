@@ -2,15 +2,19 @@ package org.davy.soigntou;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener, OnSeekBarChangeListener{
 
@@ -25,6 +29,7 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		but1 = (Button)this.findViewById(R.id.but1);
 		editKm = (SeekBar)this.findViewById(R.id.seekKm);
 		editKm.setOnSeekBarChangeListener(this);
@@ -33,6 +38,19 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 		textProgress = (TextView)findViewById(R.id.kmValue);
 		textAction = (TextView)findViewById(R.id.kmText);
 		
+		LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			new AlertDialog.Builder(this).setTitle("GPS desactivé")
+			.setMessage("Impossible de se géolocaliser. Activer le GPS et redémarrer l'application.")
+			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {			
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub				
+				}		
+			}).show();
+		    but1.setOnClickListener(null);
+		}
+		
 	}
 
 	@Override
@@ -40,9 +58,9 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 		Intent go = new Intent(this,AllPharmaciesActivity.class);
 		strDistance = textProgress.getText().toString();
 		if (strDistance.trim().equals("")) {
-			new AlertDialog.Builder(this).setTitle("Attention !")
+			new AlertDialog.Builder(this).setTitle("Champs non-rempli")
 				.setMessage("Vous n'avez pas mis de rayon de recherche !")
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {			
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {			
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub				
@@ -74,4 +92,6 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	public void onStopTrackingTouch(SeekBar seekBar) {
 
 	}
+		
+	
 }
