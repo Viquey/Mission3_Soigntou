@@ -8,13 +8,10 @@ public class Pharmacie implements Serializable, Comparable {
 
 	private String commune;
 	private String voie;
-	private int nofinesset;
 	private String rs;
 	private String rslongue;
-	private String compldistrib;
 	private String typvoie;
-	private int telephone; 
-	private int nofinessej;
+	private int telephone;
 	private int telecopie;
 	private int numvoie;
 	private Double lat;
@@ -34,13 +31,10 @@ public class Pharmacie implements Serializable, Comparable {
 		super();
 		this.commune = commune;
 		this.voie = voie;
-		this.nofinesset = nofinesset;
 		this.rs = rs;
 		this.rslongue = rslongue;
-		this.compldistrib = compldistrib;
 		this.typvoie = typvoie;
 		this.telephone = telephone;
-		this.nofinessej = nofinessej;
 		this.telecopie = telecopie;
 		this.numvoie = numvoie;
 		this.lat = lat;
@@ -64,14 +58,6 @@ public class Pharmacie implements Serializable, Comparable {
 		this.voie = voie;
 	}
 
-	public int getNofinesset() {
-		return nofinesset;
-	}
-
-	public void setNofinesset(int nofinesset) {
-		this.nofinesset = nofinesset;
-	}
-
 	public String getRs() {
 		return rs;
 	}
@@ -88,14 +74,6 @@ public class Pharmacie implements Serializable, Comparable {
 		this.rslongue = rslongue;
 	}
 
-	public String getCompldistrib() {
-		return compldistrib;
-	}
-
-	public void setCompldistrib(String compldistrib) {
-		this.compldistrib = compldistrib;
-	}
-
 	public String getTypvoie() {
 		return typvoie;
 	}
@@ -110,14 +88,6 @@ public class Pharmacie implements Serializable, Comparable {
 
 	public void setTelephone(int telephone) {
 		this.telephone = telephone;
-	}
-
-	public int getNofinessej() {
-		return nofinessej;
-	}
-
-	public void setNofinessej(int nofinessej) {
-		this.nofinessej = nofinessej;
 	}
 
 	public int getTelecopie() {

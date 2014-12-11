@@ -37,9 +37,9 @@ public class MapActivity extends Activity {
 				.getMap();
 		rayon = this.getIntent().getExtras().getInt("rayon");
 		listePharmas = (List<Pharmacie>) this.getIntent().getExtras().getSerializable("listePharmas");		
-		Location mine = getMaPosition(this);
-		LatLng minee = new LatLng(mine.getLatitude(),mine.getLongitude());
-		Marker markerMe = map.addMarker(new MarkerOptions().position(minee).title("Ma position"));
+		Location myLocation = getMaPosition(this);
+		LatLng myPosition = new LatLng(myLocation.getLatitude(),myLocation.getLongitude());
+		Marker markerMe = map.addMarker(new MarkerOptions().position(myPosition).title("Ma position"));
 		
 		for(Pharmacie pharmacie : listePharmas){
 			double distance = pharmacie.getDistanceFromMyPosition();
@@ -65,7 +65,7 @@ public class MapActivity extends Activity {
 		}
 
 		// Ajuste la camera sur Melun avec un zoom de 15
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(minee, 15));
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 15));
 
 		// Zoom possible
 		map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);

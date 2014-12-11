@@ -17,8 +17,9 @@ foreach($jsonDecoded as $item){
 	unset($item->{'fields'}->{'dateautor'});
 	unset($item->{'fields'}->{'datemaj'});
 	unset($item->{'fields'}->{'dateouv'});
-	
-	
+	unset($item->{'fields'}->{'nofinesset'});
+	unset($item->{'fields'}->{'compldistrib'});
+	unset($item->{'fields'}->{'nofinessej'});
 }
  
 $jsonReturned=json_encode($jsonDecoded , JSON_FORCE_OBJECT);
@@ -26,7 +27,6 @@ $jsonReturned=json_encode($jsonDecoded , JSON_FORCE_OBJECT);
 $jsonFile = fopen("data.json", "x+");
 fputs($jsonFile, $jsonReturned);
 fclose($jsonFile);
-
 
 ?>
 

@@ -46,13 +46,10 @@ OnItemClickListener {
 	private ArrayList<Pharmacie> listePharmas;
 	private String commune;
 	private String voie;
-	private int nofinesset;
 	private String rs;
 	private String rslongue;
-	private String compldistrib;
 	private String typvoie;
 	private int telephone;
-	private int nofinessej;
 	private int telecopie;
 	private int numvoie;
 	private double lat;
@@ -75,16 +72,12 @@ OnItemClickListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.goMap) {
 			Intent intent = new Intent(this, MapActivity.class);
@@ -137,7 +130,7 @@ OnItemClickListener {
 				+"-Distance : "+pharmaDistance)
 				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) { 
-						// continue with delete
+
 					}
 				})
 				.show();
@@ -201,11 +194,6 @@ OnItemClickListener {
 					} else {
 						voie = "Non renseigné";
 					}
-					if (fields.has("nofinesset")) {
-						nofinesset = fields.getInt("nofinesset");
-					} else {
-						nofinesset = 0;
-					}
 					if (fields.has("rs")) {
 						rs = fields.getString("rs");
 					} else {
@@ -216,11 +204,6 @@ OnItemClickListener {
 					} else {
 						rslongue = rs;
 					}
-					if (fields.has("compldistrib")) {
-						compldistrib = fields.getString("compldistrib");
-					} else {
-						compldistrib = "Non renseigné";
-					}
 					if (fields.has("typvoie")) {
 						typvoie = fields.getString("typvoie");
 					} else {
@@ -230,11 +213,6 @@ OnItemClickListener {
 						telephone = fields.getInt("telephone");
 					} else {
 						telephone = 0;
-					}
-					if (fields.has("nofinessej")) {
-						nofinessej = fields.getInt("nofinessej");
-					} else {
-						nofinessej = 0;
 					}
 					if (fields.has("telecopie")) {
 						telecopie = fields.getInt("telecopie");
@@ -256,13 +234,10 @@ OnItemClickListener {
 
 					pharma.setCommune(commune);
 					pharma.setVoie(voie);
-					pharma.setNofinesset(nofinesset);
 					pharma.setRs(rs);
 					pharma.setRslongue(rslongue);
-					pharma.setCompldistrib(compldistrib);
 					pharma.setTypvoie(typvoie);
 					pharma.setTelephone(telephone);
-					pharma.setNofinessej(nofinessej);
 					pharma.setTelecopie(telecopie);
 					pharma.setNumvoie(numvoie);
 					pharma.setLat(lat);
@@ -277,7 +252,6 @@ OnItemClickListener {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return array;

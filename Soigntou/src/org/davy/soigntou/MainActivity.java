@@ -45,7 +45,7 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {			
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub				
+			
 				}		
 			}).show();
 		    but1.setOnClickListener(null);
@@ -63,7 +63,7 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {			
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub				
+						
 					}		
 				}).show();
 		} 
@@ -75,12 +75,8 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	}
 
 	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromAction) {
-		
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromAction) {		
 		textProgress.setText((progress+1)+"");
-    	// change action text label to changing
-    	textAction.setText(" km");
-		
 	}
 
 	@Override
