@@ -132,7 +132,20 @@ public class Pharmacie implements Serializable, Comparable {
 
 	@Override
 	public String toString() {
-		return rslongue;
+		double distance = distanceFromMyPosition;
+		String extDistance = "m";
+		String pharmaDistance = "";
+		if (distance > 1000) {
+			distance = distance / 1000;
+			distance = (double) Math.round(distance * 10)/10;
+			extDistance = "km";
+			pharmaDistance = distance+" "+extDistance;
+		}
+		else {
+			int distance2 =  (int) Math.round(distance);
+			pharmaDistance = distance2+" "+extDistance;
+		}
+		return rslongue+" - "+pharmaDistance;
 	}
 
 	public String getAdresse() {

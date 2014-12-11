@@ -39,8 +39,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class AllPharmaciesActivity extends ListActivity implements
-OnItemClickListener {
+public class AllPharmaciesActivity extends ListActivity implements OnItemClickListener {
 
 	private String JSON;
 	private ArrayList<Pharmacie> listePharmas;
@@ -288,12 +287,10 @@ OnItemClickListener {
 	public final static Location getMaPosition(Context _context) {
 		Location location = null;
 		try {
-			LocationManager locationManager = (LocationManager) _context
-					.getSystemService(Context.LOCATION_SERVICE);
+			LocationManager locationManager = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
 			List<String> providers = locationManager.getProviders(true);
 			for (int i = providers.size() - 1; i >= 0; i--) {
-				location = locationManager.getLastKnownLocation(providers
-						.get(i));
+				location = locationManager.getLastKnownLocation(providers.get(i));
 			}
 		} catch (Exception e) {
 		}

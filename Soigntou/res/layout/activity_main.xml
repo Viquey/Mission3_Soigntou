@@ -8,17 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.davy.soigntou.MainActivity" >
 
-
-    <TextView
-        android:id="@+id/kmText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/kmValue"
-        android:layout_alignBottom="@+id/kmValue"
-        android:layout_centerHorizontal="true"
-        android:text=" km"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/but1"
         android:layout_width="wrap_content"
@@ -27,6 +16,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="186dp"
         android:text="@string/but1" />
+    
+   <TextView
+        android:id="@+id/kmText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekKm"
+        android:layout_centerHorizontal="true"
+        android:text=" km"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <TextView
         android:id="@+id/kmValue"
@@ -55,23 +53,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:text="@string/kmView" />
+    
+    <Button
+        android:id="@+id/moinsButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/kmView"
+        android:layout_alignTop="@+id/kmValue"
+        android:text="-" />
 
     <Button
         android:id="@+id/plusButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/seekKm"
-        android:layout_alignTop="@+id/kmText"
+        android:layout_below="@+id/seekKm"
+        android:layout_toRightOf="@+id/but1"
         android:text="+" />
 
-    <Button
-        android:id="@+id/moinsButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/seekKm"
-        android:layout_alignTop="@+id/kmValue"
-        android:text="-" />
+    
 
 </RelativeLayout>

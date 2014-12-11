@@ -24,7 +24,8 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	private int distance;
 	private TextView textProgress;
 	private TextView textAction;
-	private Button boutonPlus, boutonMoins;
+	private Button boutonPlus;
+	private Button boutonMoins;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
