@@ -60,8 +60,8 @@ public class MapActivity extends Activity {
 			Marker pharmMark = map.addMarker(new MarkerOptions()
 				.position(pharmLatLng)
 				.title(pharmacie.getRslongue()+" "+pharmaDistance)
-				/*.icon(BitmapDescriptorFactory
-			            .fromResource(R.drawable.ic_plusone_small_off_client))*/);
+				.icon(BitmapDescriptorFactory
+			            .fromResource(R.drawable.ic_launcher)));
 		}
 
 		// Ajuste la camera sur Melun avec un zoom de 15
