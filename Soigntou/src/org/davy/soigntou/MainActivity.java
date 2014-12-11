@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {			
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub				
+			
 				}		
 			}).show();
 		    but1.setOnClickListener(null);
@@ -71,6 +71,7 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	public void onClick(View arg0) {
 		Intent go = new Intent(this,AllPharmaciesActivity.class);
 		strDistance = textProgress.getText().toString();
+<<<<<<< HEAD
 		distance = Integer.parseInt(strDistance);
 		go.putExtra("rayon",distance);
 		this.startActivityForResult(go, 10);
@@ -84,6 +85,28 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
     	// change action text label to changing
     	textAction.setText(" km");
 		
+=======
+		if (strDistance.trim().equals("")) {
+			new AlertDialog.Builder(this).setTitle("Champs non-rempli")
+				.setMessage("Vous n'avez pas mis de rayon de recherche !")
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {			
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+					}		
+				}).show();
+		} 
+		else {
+			distance = Integer.parseInt(strDistance);
+			go.putExtra("rayon",distance);
+			this.startActivityForResult(go, 10);
+		}
+	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromAction) {		
+		textProgress.setText((progress+1)+"");
+>>>>>>> 048274a2ca1b55138e9182dbfca4666f5a71c08d
 	}
 
 	@Override
