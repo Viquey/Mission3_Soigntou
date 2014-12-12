@@ -23,7 +23,6 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	private String strDistance;
 	private int distance;
 	private TextView textProgress;
-	private TextView textAction;
 	private Button boutonPlus;
 	private Button boutonMoins;
 
@@ -35,7 +34,6 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 		but1 = (Button)this.findViewById(R.id.but1);
 		editKm = (SeekBar)this.findViewById(R.id.seekKm);
 		textProgress = (TextView)findViewById(R.id.kmValue);
-		textAction = (TextView)findViewById(R.id.kmText);
 		boutonPlus = (Button)findViewById(R.id.plusButton);
 		boutonMoins = (Button)findViewById(R.id.moinsButton);
 		
@@ -72,6 +70,8 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 	public void onClick(View arg0) {
 		Intent go = new Intent(this,AllPharmaciesActivity.class);
 		strDistance = textProgress.getText().toString();
+		int strDistanceLength = strDistance.length();
+		strDistance = strDistance.substring(0, strDistanceLength-3);
 
 		distance = Integer.parseInt(strDistance);
 		go.putExtra("rayon",distance);
@@ -81,7 +81,7 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromAction) {		
-		textProgress.setText(String.valueOf(progress+1));
+		textProgress.setText(String.valueOf(progress+1)+ " km");
 	}
 
 	@Override

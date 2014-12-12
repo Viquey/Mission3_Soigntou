@@ -198,7 +198,6 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 		try {
 			JSONObject reader = new JSONObject(json);
 			Pharmacie pharma = null;
-			Log.i("reader lenght", "" + reader.length());
 			for (int i = 0; i < reader.length(); i++) {
 				JSONObject pharmacie = reader
 						.getJSONObject(Integer.toString(i));

@@ -17,25 +17,6 @@
         android:layout_marginBottom="186dp"
         android:text="@string/but1" />
     
-   <TextView
-        android:id="@+id/kmText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/seekKm"
-        android:layout_centerHorizontal="true"
-        android:text=" km"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-    <TextView
-        android:id="@+id/kmValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/but1"
-        android:layout_marginBottom="14dp"
-        android:layout_toLeftOf="@+id/kmText"
-        android:text="1"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
     <SeekBar
         android:id="@+id/seekKm"
         android:layout_width="match_parent"
@@ -72,6 +53,13 @@
         android:layout_toRightOf="@+id/but1"
         android:text="+" />
 
-    
+    <TextView
+        android:id="@+id/kmValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/but1"
+        android:layout_centerHorizontal="true"
+        android:text="1 km"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

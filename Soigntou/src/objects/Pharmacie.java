@@ -181,6 +181,7 @@ public class Pharmacie implements Serializable, Comparable {
 
 		Location locPharm = new Location("pharmacie");
 		locPharm.setLatitude(this.lat);
+
 		locPharm.setLongitude(this.lng);
 		double distanceCalculated = locPharm.distanceTo(maPosition);
 

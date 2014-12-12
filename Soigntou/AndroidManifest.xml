@@ -42,12 +42,12 @@
         
         <activity
             android:name=".AllPharmaciesActivity"
-            android:label="@string/title_activity_all_pharmacies" >
+            android:label="@string/app_name" >
         </activity>
         
         <activity
             android:name=".MapActivity"
-            android:label="Map" >
+            android:label="@string/app_name" >
         </activity>
 
         <meta-data
