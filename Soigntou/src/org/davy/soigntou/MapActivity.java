@@ -40,6 +40,7 @@ public class MapActivity extends Activity {
 		Location myLocation = getMaPosition(this);
 		LatLng myPosition = new LatLng(myLocation.getLatitude(),myLocation.getLongitude());
 		Marker markerMe = map.addMarker(new MarkerOptions().position(myPosition).title("Ma position"));
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 15));
 		
 		for(Pharmacie pharmacie : listePharmas){
 			double distance = pharmacie.getDistanceFromMyPosition();
@@ -62,10 +63,10 @@ public class MapActivity extends Activity {
 				.title(pharmacie.getRslongue()+" "+pharmaDistance)
 				.icon(BitmapDescriptorFactory
 			            .fromResource(R.drawable.ic_launcher)));
+			if(listePharmas.size()==1){
+					map.moveCamera(CameraUpdateFactory.newLatLngZoom(pharmLatLng, 15));
+			}
 		}
-
-		// Ajuste la camera sur Melun avec un zoom de 15
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 15));
 
 		// Zoom possible
 		map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);

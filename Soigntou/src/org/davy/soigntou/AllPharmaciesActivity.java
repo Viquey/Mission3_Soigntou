@@ -67,6 +67,17 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 
 		ListView lv = getListView();
 		lv.setOnItemClickListener(this);
+		if(listePharmas.size()==0){
+			new AlertDialog.Builder(this)
+			.setTitle("Informations:")
+			.setMessage("Aucune pharmacie trouvée.")
+					.setNeutralButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) { 
+
+						}
+					})
+					.show();
+		}
 	}
 
 	@Override
@@ -97,11 +108,25 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
 		//variable pour contruire le message du AlertDialogue
-		Pharmacie currentPharma = listePharmas.get(arg2);
+		final Pharmacie currentPharma = listePharmas.get(arg2);
 		String pharmaInfo = currentPharma.getAdresse();
 		String pharmaVille = currentPharma.getCommune() +" "+ currentPharma.getCp();
-		String pharmaPhone = "0"+currentPharma.getTelephone();
-		String pharmaFax = "0"+currentPharma.getTelecopie();
+		
+		String pharmaPhone = "";
+		if(currentPharma.getTelephone()!=0){
+			pharmaPhone = "0"+currentPharma.getTelephone();
+		}
+		else{
+			pharmaPhone = "Non renseigné.";
+		}
+		
+		String pharmaFax = "";
+		if(currentPharma.getTelecopie()!=0){
+			pharmaFax = "0"+currentPharma.getTelecopie();
+		}
+		else{
+			pharmaFax = "Non renseigné.";
+		}
 
 		//Traitement pour récuperer la distance en m ou en km et arrondie
 		double distance = currentPharma.getDistanceFromMyPosition();
@@ -127,9 +152,20 @@ public class AllPharmaciesActivity extends ListActivity implements OnItemClickLi
 				+"-Téléphone : "+pharmaPhone+"\n"
 				+"-Fax : "+pharmaFax+"\n"
 				+"-Distance : "+pharmaDistance)
-				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+				.setNeutralButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) { 
 
+					}
+				})
+				.setPositiveButton("Voir sur la carte", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) { 
+						ArrayList<Pharmacie> onePharma = new ArrayList();
+						onePharma.add(currentPharma);
+						Intent intent = new Intent(AllPharmaciesActivity.this, MapActivity.class);
+						intent.putExtra("rayon", rayon);
+						intent.putExtra("listePharmas", onePharma);
+						AllPharmaciesActivity.this.startActivityForResult(intent, 10);
+						finish();
 					}
 				})
 				.show();
