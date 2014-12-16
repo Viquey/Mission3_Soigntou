@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#27ae60"
+    android:gravity="top"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -10,56 +12,69 @@
 
     <Button
         android:id="@+id/but1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="186dp"
-        android:text="@string/but1" />
-    
-    <SeekBar
-        android:id="@+id/seekKm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/kmValue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp"
-        android:max="149" />
-    
+        android:layout_marginBottom="114dp"
+        android:background="@drawable/button2"
+        android:text="@string/but1"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp" />
+
     <TextView
         android:id="@+id/kmView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/seekKm"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:text="@string/kmView" />
-    
-    <Button
-        android:id="@+id/moinsButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:text="@string/kmView"
+        android:textColor="#FFFFFF" />
+
+    <SeekBar
+        android:id="@+id/seekKm"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/kmView"
-        android:layout_alignTop="@+id/kmValue"
-        android:text="-" />
+        android:layout_below="@+id/kmView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:max="149"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/plusButton"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/seekKm"
+        android:layout_marginTop="32dp"
         android:layout_toRightOf="@+id/but1"
-        android:text="+" />
+        android:background="@drawable/buttonshape"
+        android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/moinsButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignBaseline="@+id/plusButton"
+        android:layout_alignBottom="@+id/plusButton"
+        android:layout_toLeftOf="@+id/but1"
+        android:background="@drawable/buttonshape"
+        android:text="−"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/kmValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/but1"
+        android:layout_alignTop="@+id/moinsButton"
         android:layout_centerHorizontal="true"
         android:text="1 km"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>

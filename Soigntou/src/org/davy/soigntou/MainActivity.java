@@ -58,7 +58,8 @@ public class MainActivity extends Activity implements OnClickListener, OnSeekBar
 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {			
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-			
+	
+					
 				}		
 			}).show();
 		    but1.setOnClickListener(null);
